@@ -5,7 +5,6 @@ import { LOCAL } from '../data/localRecipes'
 import { dateKey, MEALS, weekDays } from '../lib/utils'
 import { fetchRandomMeal, useSearchMeals } from '../api/meals'
 import { avoidHits } from '../lib/utils'
-import Pic from '../components/Pic'
 import MascotHero from '../components/MascotHero'
 import RecipeCard from '../components/RecipeCard'
 import AvoidBox from '../components/AvoidBox'
@@ -35,25 +34,15 @@ export default function Home() {
     n + MEALS.filter((_, mi) => !!plan[`${dateKey(d)}|${mi}`]).length, 0)
   const ratedCount = Object.values(notes).filter((n) => n.rating > 0).length
 
-  // เมนูแนะนำวันนี้
-  const todayRecipe = useMemo(() => {
-    const ok = LOCAL.filter((r) => avoidHits(r, avoid.groups, avoid.custom).length === 0)
-    const pool = ok.length ? ok : LOCAL
-    const seed = new Date().toDateString()
-    let h = 0
-    for (const c of seed) h = (h * 31 + c.charCodeAt(0)) >>> 0
-    return pool[h % pool.length]
-  }, [avoid])
-
-  // อาหารนานาชาติจาก API
+  // เมนูนานาชาติจาก API
   const intlQuery = useSearchMeals('chicken', true)
   const intlRecipes = (intlQuery.data ?? []).slice(0, 4)
 
   // สูตรโปรดล่าสุด
   const recentFavs = Object.values(favs).slice(-4).reverse()
 
-  // tip ประจำวัน
-  const todayTip = useMemo(() => TIPS[new Date().getDate() % TIPS.length], [])
+  // tip ประจำวัน (ไม่ได้ใช้แสดงในหน้านี้แล้ว)
+  void useMemo(() => TIPS[new Date().getDate() % TIPS.length], [])
 
   async function surpriseApi() {
     try {

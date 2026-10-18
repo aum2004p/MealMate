@@ -35,10 +35,6 @@ export default function Planner() {
     MEALS.reduce((sum, _, mi) => sum + (plan[`${dateKey(d)}|${mi}`]?.kcal ?? 0), 0),
   )
   const items = [...agg.entries()]
-  const label = (e: { name: string; qty?: number; unit?: string; measures: string[] }) =>
-    e.qty !== undefined
-      ? `${e.name} ${num(e.qty)} ${e.unit}`
-      : `${e.name}${e.measures.length ? ` — ${e.measures.join(' + ')}` : ''}`
 
   async function copyList() {
     const lines: string[] = ['🛒 MealMate — รายการซื้อวัตถุดิบ']
