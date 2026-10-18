@@ -34,9 +34,9 @@ export default function Home() {
     n + MEALS.filter((_, mi) => !!plan[`${dateKey(d)}|${mi}`]).length, 0)
   const ratedCount = Object.values(notes).filter((n) => n.rating > 0).length
 
-  // เมนูนานาชาติจาก API
+  // อาหารนานาชาติจาก API
   const intlQuery = useSearchMeals('chicken', true)
-  const intlRecipes = (intlQuery.data ?? []).slice(0, 4)
+  const intlRecipes = (intlQuery.data ?? []).slice(0, 8)
 
   // สูตรโปรดล่าสุด
   const recentFavs = Object.values(favs).slice(-4).reverse()
@@ -100,7 +100,7 @@ export default function Home() {
           <Link className="btn alt" to="/recipes">ดูทั้งหมด →</Link>
         </div>
         <div className="grid">
-          {LOCAL.slice(0, 4).map((r) => <RecipeCard key={r.id} r={r} />)}
+          {LOCAL.slice(0, 12).map((r) => <RecipeCard key={r.id} r={r} />)}
         </div>
       </section>
 
